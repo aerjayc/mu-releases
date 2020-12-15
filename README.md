@@ -1,8 +1,11 @@
 # To do:
-- access MangaUpdates' API
+- ~~access MangaUpdates' API~~ no API afaik
 - get top-N latest / 1st page
-  - get metadata of each
-  - do some processing to get something useful
-    - sort results by popularity
-    - get dropped manga, sort by popularity
-- get top-N results sorted by some other measure + filter using tags
+- error handling
+  - check for valid `perpage` or `page` values
+- threading?
+
+## Concrete To-do list:
+- Extend argument `page=N` to `page=[1, 2, 5, ...]` or `page=range(10)`
+- Use more memory-efficient algorithm to select entries (e.g. `find_next`)
+- Extract all useful information from each entry (e.g. links)

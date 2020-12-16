@@ -1,13 +1,25 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
 # TODO: Error Handling
 
-def get_archived_releases(page=1, perpage=5):
+def get_archived_releases(pages=1, perpage=5):
+    if type(pages) is not list:
+        page = [pages]
+
+    rows = []
+    for page in pages:
+        rows.extend(get_archived_release_page(page=page, perpage=perpage))
+
+    return rows
+
+def get_archived_release_page(page=1, perpage=5, delay=3):
     url = 'https://www.mangaupdates.com/releases.html'
 
     params = {'act': 'archive', 'page': page, 'perpage': perpage}
     response = requests.get(url, params=params)
+    time.sleep(delay)
     soup = BeautifulSoup(response.content, 'lxml')
 
     main_content = soup.find(id='main_content')

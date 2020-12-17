@@ -6,7 +6,7 @@ import time
 
 def get_archived_releases(pages=1, perpage=5):
     if type(pages) is not list:
-        page = [pages]
+        pages = [pages]
 
     rows = []
     for page in pages:
@@ -40,6 +40,13 @@ def get_archived_release_page(page=1, perpage=5, delay=3):
             rows.append({header: entry.text})
         else:
             rows[row_index][header] = entry.text
+
+        if entry.a and 'href' in entry.a.attrs:     # if entry has href
+            if 'title' in entry.a.attrs:
+                key = entry.a['title']
+            else:
+                key = header + ' url'
+            rows[row_index][key] = entry.a['href']
 
     if len(rows[-1]) < num_cols:    # remove extraneous last row
         del rows[-1]
